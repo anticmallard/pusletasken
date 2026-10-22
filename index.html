@@ -209,7 +209,7 @@ const ICON = {
 const PICKER_NAMES = {
   bleer:"Bleer", puslemaatte:"Puslemåtte", vaadservietter:"Vådservietter", bleposer:"Bleposer", skiftetoej:"Skiftetøj",
   mad:"Mad", vandflaske:"Vandflaske", ske:"Ske", stofble:"Stofble",
-  taeppe:"Tæppe", nusseklud:"Nusseklud", legetoej:"Legetøj", monitor:"Monitor",
+  taeppe:"Tæppe", nusseklud:"Nusseklud", legetoej:"Legetøj", monitor:"Monitor", pude:"Pude", baeresele:"Bæresele",
   jakke:"Varmt tøj", hue:"Hue", regnslag:"Regnslag",
   sutteflaske:"Sutteflaske", sut:"Sut", bidering:"Bidering", hagesmaek:"Hagesmæk", sokker:"Sokker",
   creme:"Creme", solcreme:"Solcreme", saebe:"Sæbe / håndsprit", pung:"Taske / etui", kasse:"Kasse / andet"
@@ -232,12 +232,12 @@ const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
 const STARTER = [
   ["ble","bleer","Bleer"],["ble","puslemaatte","Puslemåtte"],["ble","vaadservietter","Vådservietter"],["ble","bleposer","Bleposer"],["ble","skiftetoej","Skiftetøj"],
   ["mad","mad","Mad"],["mad","vandflaske","Vandflaske"],["mad","ske","Ske"],["mad","stofble","Stofble"],
-  ["sov","taeppe","Tæppe"],["sov","nusseklud","Nusseklud"],["sov","legetoej","Legetøj"],["sov","monitor","Monitor"],
+  ["sov","taeppe","Tæppe"],["sov","nusseklud","Nusseklud"],["sov","legetoej","Legetøj"],["sov","monitor","Monitor"],["sov","pude","Pude"],["sov","baeresele","Bæresele"],
   ["vej","jakke","Varmt tøj"],["vej","hue","Hue / Solhat"],["vej","regnslag","Regnslag"]
 ];
 const TILT = [-1, 1, 0.5, -0.5];
 const KEY = "out-the-door-v1";
-function fresh(){return{v:2,m1:true,items:STARTER.map(([cat,icon,name],i)=>({id:"s"+i,cat,icon,name,done:false}))}}
+function fresh(){return{v:2,m1:true,m2:true,items:STARTER.map(([cat,icon,name],i)=>({id:"s"+i,cat,icon,name,done:false}))}}
 // Lists saved by earlier versions: unchanged starter lists get the new one; custom lists keep their items, sorted into categories
 const OLD_STARTERS = [
   "Nappies|Wipes|Changing mat|Nappy bags|Nappy cream|Spare clothes|Bottle / milk|Snacks & spoon|Bib & muslin|Dummy|Favourite toy|Blanket|Hat|Keys|Phone|Wallet",
@@ -260,6 +260,15 @@ function load(){
         if(i>-1){ const [st]=s.items.splice(i,1); st.cat="mad";
           let at=s.items.length; for(let j=s.items.length-1;j>=0;j--) if(s.items[j].cat==="mad"){at=j+1;break}
           s.items.splice(at,0,st); }
+        // Pude and Bæresele added to the standard list: add them to Søvn & Leg once
+        if(!s.m2){
+          s.m2 = true;
+          [["pude","Pude"],["baeresele","Bæresele"]].forEach(([icon,name])=>{
+            if(s.items.some(x=>x.icon===icon)) return;
+            let at=s.items.length; for(let j=s.items.length-1;j>=0;j--) if(s.items[j].cat==="sov"){at=j+1;break}
+            s.items.splice(at,0,{id:"s-"+icon,cat:"sov",icon,name,done:false});
+          });
+        }
         return s;
       }
       if(OLD_STARTERS.includes(s.items.map(i=>i.name).join("|"))) return fresh();
