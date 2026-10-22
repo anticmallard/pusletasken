@@ -42,7 +42,7 @@ svg.ic{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 
 header{display:flex;flex-direction:column;gap:16px}
 .brand{display:flex;align-items:center;gap:12px}
-.logo{width:64px;height:64px;flex:none;transform:rotate(-6deg)}
+.logo{width:64px;height:64px;flex:none;display:block;border-radius:18px;border:2.5px solid var(--navy);box-shadow:3px 3px 0 var(--navy);transform:rotate(-6deg)}
 .brand-text{display:flex;flex-direction:column;gap:2px;min-width:0}
 h1{font-family:var(--display);font-weight:400;font-size:2.2rem;line-height:1;margin:0}
 .tag{font-weight:600;font-size:.92rem;color:var(--forest)}
@@ -119,13 +119,7 @@ h1{font-family:var(--display);font-weight:400;font-size:2.2rem;line-height:1;mar
 <div class="wrap">
   <header>
     <div class="brand">
-      <svg class="logo" viewBox="0 0 72 72" aria-hidden="true">
-        <rect x="6" y="8" width="60" height="60" rx="18" fill="#001E3F"/>
-        <rect x="2" y="3" width="60" height="60" rx="18" fill="#A86F16" stroke="#001E3F" stroke-width="3.5"/>
-        <path d="M23 25v-7a9 9 0 0 1 18 0v7" fill="none" stroke="#001E3F" stroke-width="4.5" stroke-linecap="round"/>
-        <rect x="11" y="25" width="42" height="29" rx="9" fill="#8A5862" stroke="#001E3F" stroke-width="3.5"/>
-        <path d="M23 39l6 6 11-11" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <img class="logo" src="icon-192.png" alt="" width="64" height="64">
       <div class="brand-text">
         <h1>Pusletasken</h1>
         <span class="tag">Alt det, der skal med, når vi tager afsted</span>
